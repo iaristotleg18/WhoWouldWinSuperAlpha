@@ -29,7 +29,9 @@ $(document).ready(function() {
             alert("Only ONE can win!.");
           };
 
-
+          if (selectedElements == 1){
+            alert (data-name);
+          };
 
        alert($("#comment").val());
      });
