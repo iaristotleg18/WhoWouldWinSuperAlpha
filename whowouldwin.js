@@ -9,7 +9,11 @@ $(document).ready(function() {
   });
   //$(".brown").click(yoMan);
   $("#button").click(function() {
-        alert( "Superhuman Selected. Now see what other people think!");
+        // alert( "Superhuman Selected. Now see what other people think!");
+        if ("#data-name" == "#selectedImg"){
+           alert($("#data-name").val());
+
+         };
   });
 
 
@@ -18,10 +22,8 @@ $(document).ready(function() {
 
       var selectedElements = $(".selectedImg");
       console.log(selectedElements);
-         if (selectedElements == 1){
-            alert("Perfect choice. Now commence to the next fight.");
 
-          };
+
           if (selectedElements == 0){
             alert("Choose a winner.");
           };
@@ -29,11 +31,9 @@ $(document).ready(function() {
             alert("Only ONE can win!.");
           };
 
-          if (selectedElements == 1){
-            alert (data-name);
-          };
 
-       alert($("#comment").val());
+
+
      });
 
     });
