@@ -10,7 +10,8 @@ $(document).ready(function() {
   //$(".brown").click(yoMan);
   $("#button").click(function() {
         // alert( "Superhuman Selected. Now see what other people think!");
-        if ("#data-name" == "#selectedImg"){
+
+        if (selectedImg.length == 1 )(onclick.length == "submit"){
            alert($("#data-name").val());
 
          };
@@ -24,17 +25,13 @@ $(document).ready(function() {
       console.log(selectedElements);
 
 
-          if (selectedElements == 0){
+          if (selectedImg.length == 0){
             alert("Choose a winner.");
           };
-          if (selectedElements == 2){
+          if (selectedImg.length == 2){
             alert("Only ONE can win!.");
           };
-
-
-
-
-     });
+      });
 
     });
 
