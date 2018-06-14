@@ -68,14 +68,14 @@ $(document).ready(function() {
         ... = selectedElements[...index of element...]
       tells javascript which specific element to get, should be a number (0,1,2,3,4,5...)
       REMEMBER: when you count in code, start at 0
-      So if you want the 3 element in an array, you call
-        var heroName = selectedElements[2]  -- because 2 is the 3rd element
+      So if you want the 3rd element in an array, you call
+        var heroName = selectedElements[2]
 
       In your new if statement where the length of selectedElements is 1, there is only 1 element.
-      Hence why you want to get the data from the FIRST index
+      Hence why you want to get the data from the FIRST element
 
 
-    ...Third you need to get the title from the HTML element...
+    ...Third you need to get the title from the HTML element after you have selected it...
       Once you have access to the first element in selectedElements, you will want to get access to data-name, so you can print it.
       You can use the jquery attr() or data() function to do this. It's easy with the data function.
       Here is the documentation for it: https://api.jquery.com/data/
@@ -91,11 +91,11 @@ $(document).ready(function() {
       / ====== Javascript ====== /
       var allTests = $(".test")
 
-      var thirdRole = allTests[2].data("role"); //  thirdRole == 'book'
-      var fourthRole = allTests[3].data( "role" ); // fourthRole == 'page'
+      var thirdRole = allTests[2].data("role"); //  this makes a variable called thirdRole that equals 'book'
+      var fourthRole = allTests[3].data( "role" ); // this makes a variable called fourthRole that equals 'page'
       var randomVariableName = allTests[2].data( "value" ); // randomVariableName == 20
 
-      Except you are going to look for the data attribute 'name'
+      Except, instead of data-role you are looking for data-name.
 
     Ok, this should be enough to push you through.
     As always, message me if you have questions
