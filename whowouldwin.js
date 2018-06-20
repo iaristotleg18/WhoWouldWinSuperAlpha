@@ -1,52 +1,29 @@
-
-
 $(document).ready(function() {
-<<<<<<< HEAD
+
+
     $(".heroImg").click(function() {
         $(".heroImg").removeClass("selectedImg")
         $(this).addClass("selectedImg");
         alert("Selected the Champion!");
     });
-=======
-  $(".heroImg").click(function() {
-    $( ".heroImg" ).removeClass( "selectedImg")
-    $(this).addClass("selectedImg");
-    alert( "Selected the Champion!" );
-  });
-  //$(".brown").click(yoMan);
 
-  /* =================================
-    You do not need this click function.
-    By saying $("#button").click... you are telling the code to fire the function
-    whenever an element with id=button. There is no such element in your HTML.
-
-    You could say $("button").click... without the '#', and that would fire when any
-    <button> element is clicked. But this is unnecessary because we already have $("#submit").click...
-
-    So you can delete the #button.click and the #brown.click
-  ================================= */
-
-  $("#button").click(function() {
-        // alert( "Superhuman Selected. Now see what other people think!");
-
-        if (selectedImg.length == 1 )(onclick.length == "submit"){
-           alert($("#data-name").val());
->>>>>>> b2150740a37cf169469dd5f719623b45ab94bb6b
-
-
-<<<<<<< HEAD
     $("#submit").click(function() {
+
 
         var selectedElements = $(".selectedImg");
         console.log(selectedElements);
 
 
         if (selectedElements.length == 0) {
-            alert("Choose a winner.");
+          $("submit").prop (element.disabled = false);
         };
 
         if (selectedElements.length == 1) {
-            alert("Triumphant is the winner!");
+            $("submit").prop(element.disabled = false);
+            var chosenHero = selectedElements[0];
+
+            alert( $(chosenHero).data("name"));
+            document.location.reload()
         };
 
         if (selectedElements.length == 2) {
@@ -55,7 +32,7 @@ $(document).ready(function() {
     });
 
 });
-=======
+
   /* =================================
     This #submit.click... function is very close to being correct, good work!
 
@@ -109,47 +86,23 @@ $(document).ready(function() {
 
       Here is a helpful example:
 
-      / ====== HTML ====== /
+       ====== HTML ======
       ...
-      <div class="test" data-role="book" data-value="20"></div>
-      <div class="test" data-role="page" data-value="43"></div>
+      <div class="test" data-role="book"></div>
+      <div class="test" data-role="page"></div>
       ...
 
-      / ====== Javascript ====== /
+       ====== Javascript ======
       var allTests = $(".test")
 
-      var thirdRole = allTests[2].data("role"); //  this makes a variable called thirdRole that equals 'book'
+      var secondElement = allTests[2]
+      print(secondElement.data('role)'))
+
+      .data("role"); //  this makes a variable called thirdRole that equals 'book'
       var fourthRole = allTests[3].data( "role" ); // this makes a variable called fourthRole that equals 'page'
-      var randomVariableName = allTests[2].data( "value" ); // randomVariableName == 20
 
       Except, instead of data-role you are looking for data-name.
 
     Ok, this should be enough to push you through.
     As always, message me if you have questions
-  ================================= */
-
-  $("#submit").click(function(){
-
-    // Here we defined selectedElements
-    var selectedElements = $(".selectedImg");
-    console.log(selectedElements);
-
-        // Here you are trying to reference, selectedImg, but you don't have a variable named that
-        // Currently the only variable you have (and need) is selectedElements
-        // You need to check the length of selectedElements not selectedImg
-        if (selectedImg.length == 0){
-          alert("Choose a winner.");
-        };
-        if (selectedImg.length == 2){
-          alert("Only ONE can win!.");
-        };
-    });
-
-  });
->>>>>>> b2150740a37cf169469dd5f719623b45ab94bb6b
-
-
-
-// function yoMan(name){
-//   console.log("Yo man, I'm a weak little twerp who dances like a dead dolphin.");
-// }
+   */
