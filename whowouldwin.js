@@ -2,18 +2,35 @@ $(document).ready(function() {
     // Determine which heroes are fighting
     var heroes = selectHeroes();
 
+    var base1 = "http://superheroapi.com/api/10156085785976648/";
+
+    var hero1Url = base1 + heroes.hero1
+
+    var hero2Url = base1 + heroes.hero2
+
     console.log(heroes);
 
+    console.log(hero1Url);
+
+    console.log(hero2Url);
+
     // Retrieve the hero data
+    $.ajax({
+      method: 'GET',
+      url: hero1Url,
+      crossDomain: true
+    }).done(function(data) {
+      console.log(data);
+    })
 
-    http: superheroapi.com/api/{token}/Math.floor == hero1
+    // $.ajax({
+    //   method: 'GET',
+    //   url: hero2Url,
+    //   crossDomain: true
+    // })
 
-    http: superheroapi.com/api/{token}/Math.floor == hero2
-
-    // Show the hero data
-
-    $.get(http: superheroapi.com/api/(token)/Math.floor == hero1);
-    $.get(http: superheroapi.com/api/(token)/Math.floor == hero2);
+    // $.get(hero1Url, displayHeroData);
+    // $.get(hero2Url, displayHeroData);
 
     // When the user selects a hero
     $(".heroImg").click(function() {
@@ -46,6 +63,10 @@ $(document).ready(function() {
         };
     });
 });
+
+function displayHeroData(heroData){
+  console.log(heroData);
+};
 
 //Actual business for the determining
 var selectHeroes = function() {
