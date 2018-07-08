@@ -2,7 +2,7 @@ $(document).ready(function() {
     // Determine which heroes are fighting
     var heroes = selectHeroes();
 
-    var base1 = "http://superheroapi.com/api/10156085785976648/";
+    var base1 = "https://akabab.github.io/superhero-api/api/id/";
 
     var hero1Url = base1 + heroes.hero1
 
@@ -17,20 +17,19 @@ $(document).ready(function() {
     // Retrieve the hero data
     $.ajax({
       method: 'GET',
-      url: hero1Url,
-      crossDomain: true
+      url: `${hero1Url}.json`,
+      crossDomain: true,
     }).done(function(data) {
       console.log(data);
     })
 
-    // $.ajax({
-    //   method: 'GET',
-    //   url: hero2Url,
-    //   crossDomain: true
-    // })
-
-    // $.get(hero1Url, displayHeroData);
-    // $.get(hero2Url, displayHeroData);
+    $.ajax({
+      method: 'GET',
+      url: `${hero2Url}.json`,
+      crossDomain: true,
+    }).done(function(data) {
+      console.log(data);
+    })
 
     // When the user selects a hero
     $(".heroImg").click(function() {
