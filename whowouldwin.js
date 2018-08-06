@@ -1,18 +1,9 @@
 $(document).ready(function() {
     // Determine which heroes are fighting
     var heroes = selectHeroes();
-
     var base1 = "https://akabab.github.io/superhero-api/api/id/";
-
-    var hero1Url = base1 + heroes.hero1
-
-    var hero2Url = base1 + heroes.hero2
-
-    console.log(heroes);
-
-    console.log(hero1Url);
-
-    console.log(hero2Url);
+    var hero1Url = base1 + heroes.hero1;
+    var hero2Url = base1 + heroes.hero2;
 
     // Retrieve the hero data
     $.ajax({
@@ -20,7 +11,20 @@ $(document).ready(function() {
       url: `${hero1Url}.json`,
       crossDomain: true,
     }).done(function(data) {
-      console.log(data);
+        $('.heroName.hero1').text(data.name)
+        $('.heroAlter.hero1').text(data.biography.fullName)
+        $('.heroHeight.hero1').text(data.appearance.height[0])
+        $('.heroWeight.hero1').text(data.appearance.weight[0])
+        $('.heroGender.hero1').text(data.appearance.gender)
+        $('.heroRace.hero1').text(data.appearance.race)
+        $('.heroIntelligence.hero1').text(data.powerstats.intelligence)
+        $('.heroSpeed.hero1').text(data.powerstats.speed)
+        $('.heroStrength.hero1').text(data.powerstats.strength)
+        $('.heroDurability.hero1').text(data.powerstats.durability)
+        $('.heroPower.hero1').text(data.powerstats.power)
+        $('.heroGroup.hero1').text(data.connections.groupAffiliation)
+        $('.heroApp.hero1').text(data.biography.firstAppearance)
+        $(".heroImg.hero1").attr("src", data.images.md)
     })
 
     $.ajax({
@@ -28,9 +32,21 @@ $(document).ready(function() {
       url: `${hero2Url}.json`,
       crossDomain: true,
     }).done(function(data) {
-      console.log(data);
+      $('.heroName.hero2').text(data.name)
+      $('.heroAlter.hero2').text(data.biography.fullName)
+      $('.heroHeight.hero2').text(data.appearance.height[0])
+      $('.heroWeight.hero2').text(data.appearance.weight[0])
+      $('.heroGender.hero2').text(data.appearance.gender)
+      $('.heroRace.hero2').text(data.appearance.race)
+      $('.heroIntelligence.hero2').text(data.powerstats.intelligence)
+      $('.heroSpeed.hero2').text(data.powerstats.speed)
+      $('.heroStrength.hero2').text(data.powerstats.strength)
+      $('.heroDurability.hero2').text(data.powerstats.durability)
+      $('.heroPower.hero2').text(data.powerstats.power)
+      $('.heroGroup.hero2').text(data.connections.groupAffiliation)
+      $('.heroApp.hero2').text(data.biography.firstAppearance)
+      $(".heroImg.hero2").attr("src", data.images.md)
     })
-
     // When the user selects a hero
     $(".heroImg").click(function() {
         $(".heroImg").removeClass("selectedImg")
