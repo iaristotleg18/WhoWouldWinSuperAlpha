@@ -1,18 +1,17 @@
 $(document).ready(function() {
     // Determine which heroes are fighting
     var heroes = selectHeroes();
-    var base1 = "https://akabab.github.io/superhero-api/api/id/";
+    var base1 = "http://superheroapi.com/api.php/10156085785976648/";
     var hero1Url = base1 + heroes.hero1;
     var hero2Url = base1 + heroes.hero2;
 
     // Retrieve the hero data
     $.ajax({
       method: 'GET',
-      url: `${hero1Url}.json`,
-      crossDomain: true,
+      url: hero1Url,
     }).done(function(data) {
         $('.heroName.hero1').text(data.name)
-        $('.heroAlter.hero1').text(data.biography.fullName)
+        $('.heroAlter.hero1').text(data.biography['full-name'])
         $('.heroHeight.hero1').text(data.appearance.height[0])
         $('.heroWeight.hero1').text(data.appearance.weight[0])
         $('.heroGender.hero1').text(data.appearance.gender)
@@ -23,17 +22,16 @@ $(document).ready(function() {
         $('.heroDurability.hero1').text(data.powerstats.durability)
         $('.heroPower.hero1').text(data.powerstats.power)
         $('.heroGroup.hero1').text(data.connections.groupAffiliation)
-        $('.heroApp.hero1').text(data.biography.firstAppearance)
-        $(".heroImg.hero1").attr("src", data.images.md)
+        $('.heroApp.hero1').text(data.biography['first-appearance'])
+        $(".heroImg.hero1").attr("src", data.image.url)
     })
 
     $.ajax({
       method: 'GET',
-      url: `${hero2Url}.json`,
-      crossDomain: true,
+      url: hero2Url,
     }).done(function(data) {
       $('.heroName.hero2').text(data.name)
-      $('.heroAlter.hero2').text(data.biography.fullName)
+      $('.heroAlter.hero2').text(data.biography['full-name'])
       $('.heroHeight.hero2').text(data.appearance.height[0])
       $('.heroWeight.hero2').text(data.appearance.weight[0])
       $('.heroGender.hero2').text(data.appearance.gender)
@@ -44,8 +42,8 @@ $(document).ready(function() {
       $('.heroDurability.hero2').text(data.powerstats.durability)
       $('.heroPower.hero2').text(data.powerstats.power)
       $('.heroGroup.hero2').text(data.connections.groupAffiliation)
-      $('.heroApp.hero2').text(data.biography.firstAppearance)
-      $(".heroImg.hero2").attr("src", data.images.md)
+      $('.heroApp.hero2').text(data.biography['first-appearance'])
+      $(".heroImg.hero2").attr("src", data.image.url  )
     })
     // When the user selects a hero
     $(".heroImg").click(function() {
