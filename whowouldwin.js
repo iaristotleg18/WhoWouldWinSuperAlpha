@@ -24,6 +24,8 @@ $(document).ready(function() {
         $('.heroGroup.hero1').text(data.connections.groupAffiliation)
         $('.heroApp.hero1').text(data.biography['first-appearance'])
         $(".heroImg.hero1").attr("src", data.image.url)
+        $(".heroImg.hero1").attr("data-name", data.name)
+
     })
 
     $.ajax({
@@ -43,14 +45,15 @@ $(document).ready(function() {
       $('.heroPower.hero2').text(data.powerstats.power)
       $('.heroGroup.hero2').text(data.connections.groupAffiliation)
       $('.heroApp.hero2').text(data.biography['first-appearance'])
-      $(".heroImg.hero2").attr("src", data.image.url  )
+      $(".heroImg.hero2").attr("src", data.image.url)
+      $(".heroImg.hero2").attr("data-name", data.name)
     })
+
     // When the user selects a hero
     $(".heroImg").click(function() {
-        $(".heroImg").removeClass("selectedImg")
-        $("#submit").prop ("disabled", false);
+        $(".heroImg").removeClass("selectedImg");
+        $("#submit").prop("disabled", false);
         $(this).addClass("selectedImg");
-        alert("Selected the Champion!");
     });
 
     // When the user clicks the 'submit' button
