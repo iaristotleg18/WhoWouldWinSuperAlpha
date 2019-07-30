@@ -1,0 +1,25 @@
+{
+  "name": "whowouldwinsuperalpha",
+  "version": "1.0.0",
+  "description": "who would win for superheroes",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iaristotleg18/WhoWouldWinSuperAlpha.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iaristotleg18/WhoWouldWinSuperAlpha/issues"
+  },
+  "homepage": "https://github.com/iaristotleg18/WhoWouldWinSuperAlpha#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mysql": "^2.17.1"
+  }
+}
