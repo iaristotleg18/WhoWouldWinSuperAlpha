@@ -1,7 +1,7 @@
 // var http = require('http');
 //
 var handleVisitor = function(req, res) {
-  res.send('Nylon potato chimpanzee dolphin murder raven');
+  res.send('Who Would Win backend. Hi William Mezitis');
 }
 //
 // var server = http.createServer(handleVisitor);
@@ -37,10 +37,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.get('/', handleVisitor)
-
-app.get("/ad", function (req, res){
-  res.send ("I'm Bob Needley, and I'd like you to come to Bob's Subsidized Fried Chicken! It's called that because it sounds cheaper.")
-})
 
 app.post("/selectHero", function (req, res){
   console.log(req.body.winnerId)
