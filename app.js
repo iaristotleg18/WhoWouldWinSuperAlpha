@@ -30,7 +30,7 @@ const express = require('express')
 var bodyParser = require("body-parser");
 var cors = require('cors')
 const app = express()
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}));
@@ -72,7 +72,7 @@ app.get("/worst", function (req, res){
 });
 
 app.get("/percent", function (req, res){
-  connection.query("SELECT SUM(winner_id = ?)/COUNT(*) FROM Hero_Win WHERE winner_id = ? or loser_id = ?", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result, fields){
+  connection.query("SELECT SUM(winner_id = ?)/COUNT(*) as winPercentage FROM Hero_Win WHERE winner_id = ? or loser_id = ?", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result, fields){
     console.log(this.sql);
     res.send(result);
     console.log(result);

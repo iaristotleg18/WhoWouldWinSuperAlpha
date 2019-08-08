@@ -1,9 +1,10 @@
+const url = "http://who-would-win-super-alpha.herokuapp.com"
 $(document).ready(function() {
   // Get hero leaderboarf
   // current winner
   $.ajax({
     method: 'get',
-    url: 'http://localhost:8080/best',
+    url: url + '/best',
     contentType: "application/json"
   }).done(function(data){
     $.ajax({
@@ -18,7 +19,7 @@ $(document).ready(function() {
   // current loser
   $.ajax({
     method: 'get',
-    url: 'http://localhost:8080/worst',
+    url: url + '/worst',
     contentType: "application/json"
   }).done(function(data){
     $.ajax({
@@ -52,7 +53,7 @@ $(document).ready(function() {
         // ajax post request
         $.ajax({
           method: 'post',
-          url: 'http://localhost:8080/selectHero',
+          url: url + '/selectHero',
           contentType: "application/json",
           data: JSON.stringify({
             winnerId: victorId,
@@ -133,12 +134,17 @@ function loadHero(heroId, heroClass) {
 
   $.ajax({
     method: 'get',
-    url: 'http://localhost:8080/percent',
+    url: url + '/percent',
     contentType: "application/json",
     data: {
       heroId: heroId,
     }
   }).done(function(data){
-    console.log(data)
+    var dataLog = data[0].winPercentage;
+    if (dataLog === null) {
+      dataLog = 0
+    }
+    var dataPercent = dataLog * 100 + "%";
+    $("." + heroClass + ' .winPercentage').text(dataPercent)
   });
 };
