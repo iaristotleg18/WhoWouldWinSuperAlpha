@@ -42,13 +42,14 @@ app.post("/selectHero", function (req, res){
   console.log(req.body.winnerId)
   console.log(req.body.loserId);
   if (req.body.winnerId && req.body.loserId) {
+
     // insert these ids into the db
     const battle = {
       winner_id: req.body.winnerId,
       loser_id: req.body.loserId
     };
-    // INSERT INTO Hero_Win SET winner_id = 5, loser_id = 10
-    connection.query('INSERT INTO Hero_Win SET ?', battle, (err, res) => {
+    // INSERT INTO heroes_battle SET winner_id = 5, loser_id = 10
+    connection.query('INSERT INTO heroes_battle SET ?', battle, (err, res) => {
       if(err) throw err;
       console.log('Data loaded and processed.')
     })
@@ -58,24 +59,29 @@ app.post("/selectHero", function (req, res){
 })
 
 app.get("/best", function (req, res){
-  connection.query("SELECT winner_id, COUNT(*) FROM Hero_Win GROUP BY winner_id ORDER BY COUNT(*) DESC limit 1", function (err, result, fields){
+  connection.query("select name from heroes where id = (select winner_id FROM heroes_battle GROUP BY winner_id ORDER BY COUNT(*) DESC limit 1);", function (err, result, fields){
     res.send(result);
     console.log(result);
   });
 });
 
 app.get("/worst", function (req, res){
-  connection.query("select loser_id, count(*) from Hero_Win group by loser_id order by count(*) DESC limit 1", function (err, result, fields){
+  connection.query("select name from heroes where id = (select loser_id from heroes_battle group by loser_id order by count(*) DESC limit 1)", function (err, result, fields){
     res.send(result);
     console.log(result);
   });
 });
 
 app.get("/percent", function (req, res){
-  connection.query("SELECT SUM(winner_id = ?)/COUNT(*) as winPercentage FROM Hero_Win WHERE winner_id = ? or loser_id = ?", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result, fields){
+  connection.query("SELECT SUM(winner_id = ?)/COUNT(*) as winPercentage FROM heroes_battle WHERE winner_id = ? or loser_id = ?", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result, fields){
     console.log(this.sql);
     res.send(result);
     console.log(result);
+  });
+});
+app.get("/api/heroes/:id", function (req, res){
+  connection.query("SELECT * FROM heroes WHERE id = ?", [req.params.id], function (err, result, fields){
+    res.send(result)
   });
 });
 
