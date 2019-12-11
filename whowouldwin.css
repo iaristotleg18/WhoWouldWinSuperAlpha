@@ -33,9 +33,10 @@
 
 .heroArea {
   display: inline-block;
-  width: 45%;
+  max-width: 45%;
   vertical-align: top;
   text-align: left;
+  max-height: 300px;
 }
 
 .selectedImg {

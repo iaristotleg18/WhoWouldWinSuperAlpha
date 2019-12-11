@@ -1,19 +1,14 @@
-const url = "http://who-would-win-super-alpha.herokuapp.com"
+var url = "http://who-would-win-super-alpha.herokuapp.com";
+var loc = "http://localhost:8080";
 $(document).ready(function() {
-  // Get hero leaderboarf
+  // Get hero leaderboard
   // current winner
   $.ajax({
     method: 'get',
     url: url + '/best',
     contentType: "application/json"
   }).done(function(data){
-    $.ajax({
-      method: 'get',
-      url: baseUrl + data[0].winner_id,
-    }).done(function(data){
-      console.log(data.name)
-      $('.Champion').text(data.name)
-    })
+    $('.Champion').text(data[0].name)
   });
 
   // current loser
@@ -22,13 +17,7 @@ $(document).ready(function() {
     url: url + '/worst',
     contentType: "application/json"
   }).done(function(data){
-    $.ajax({
-      method: 'get',
-      url: baseUrl + data[0].loser_id,
-    }).done(function(data){
-      console.log(data.name)
-      $('.Unlucky').text(data.name)
-    })
+    $('.Unlucky').text(data[0].name)
   });
 
 
@@ -37,8 +26,10 @@ $(document).ready(function() {
 
   console.log("I Am John Iron Man");
 
-  loadHero(heroes.hero1, "hero1");
-  loadHero(heroes.hero2, "hero2");
+  loadHeroWimpApi(heroes.hero1, "hero1")
+  loadHeroWimpApi(heroes.hero2, "hero2")
+  // loadHero(heroes.hero1, "hero1");
+  // loadHero(heroes.hero2, "hero2");
 
     // When the user selects a hero
     $(".heroWrapper").click(function() {
@@ -91,11 +82,11 @@ var selectHeroes = function() {
   var hero1;
   var hero2;
 
-  hero1 = Math.floor(Math.random() * 730) + 1;
-  hero2 = Math.floor(Math.random() * 730) + 1;
+  hero1 = Math.floor(Math.random() * 32) + 1;
+  hero2 = Math.floor(Math.random() * 32) + 1;
 
   while(hero1 == hero2) {
-    hero2 = Math.floor(Math.random() * 730) + 1;
+    hero2 = Math.floor(Math.random() * 32) + 1;
   }
 
   return {
@@ -104,33 +95,29 @@ var selectHeroes = function() {
   }
 }
 
-var baseUrl = "http://superheroapi.com/api.php/10156085785976648/";
-
-function loadHero(heroId, heroClass) {
-  var heroUrl = baseUrl + heroId;
-
+function loadHeroWimpApi(heroId, heroClass) {
   $.ajax({
     method: 'GET',
-    url: heroUrl,
-  }).done(function(data) {
+    url: url + '/api/heroes/' + heroId ,
+  }).done(function(allData) {
+    const [data] = allData;
     console.log(data);
       $('.heroName.' + heroClass).text(data.name)
-      $('.heroAlter.' + heroClass).text(data.biography['fullName'])
-      $('.heroHeight.' + heroClass).text(data.appearance.height[0])
-      $('.heroWeight.' + heroClass).text(data.appearance.weight[0])
-      $('.heroRace.' + heroClass).text(data.appearance.race)
-      $('.heroIntelligence.' + heroClass).text(data.powerstats.intelligence)
-      $('.heroSpeed.' + heroClass).text(data.powerstats.speed)
-      $('.heroStrength.' + heroClass).text(data.powerstats.strength)
-      $('.heroDurability.' + heroClass).text(data.powerstats.durability)
-      $('.heroPower.' + heroClass).text(data.powerstats.power)
-      $('.heroGroup.' + heroClass).text(data.connections.groupAffiliation)
-      $('.heroApp.' + heroClass).text(data.biography['firstAppearance'])
+      $('.heroAlter.' + heroClass).text(data['alter-ego'])
+      // $('.heroHeight.' + heroClass).text(data.height)
+      // $('.heroWeight.' + heroClass).text(data.weight)
+      $('.heroRace.' + heroClass).text(data.species)
+      $('.heroIntelligence.' + heroClass).text(data.intel)
+      $('.heroSpeed.' + heroClass).text(data.speed)
+      $('.heroStrength.' + heroClass).text(data.strength)
+      $('.heroGroup.' + heroClass).text(data.superteam)
+      $('.heroItem.' + heroClass).text(data.tool)
+      $('.heroPower.' + heroClass).text(data['main-power'])
       $(".heroImg." + heroClass).attr("data-heroId", heroId)
-      $(".heroImg." + heroClass).attr("src", data.image.url)
+      $(".heroImg." + heroClass).attr("src", data['to-img'])
       $(".heroWrapper." + heroClass).attr("data-name", data.name)
       $(".heroWrapper." + heroClass).attr("data-heroId", heroId);
-  });
+  })
 
   $.ajax({
     method: 'get',
@@ -140,6 +127,54 @@ function loadHero(heroId, heroClass) {
       heroId: heroId,
     }
   }).done(function(data){
+    console.log(data);
+    var dataLog = data[0].winPercentage;
+    if (dataLog === null) {
+      dataLog = 0
+    }
+    var dataPercent = dataLog * 100 + "%";
+    $("." + heroClass + ' .winPercentage').text(dataPercent)
+  });
+};
+
+
+var baseUrl = "http://superheroapi.com/api.php/10156085785976648/";
+
+function loadHero(heroId, heroClass) {
+  var heroUrl = baseUrl + heroId;
+
+  // $.ajax({
+  //   method: 'GET',
+  //   url: heroUrl,
+  // }).done(function(data) {
+  //   console.log(data);
+  //     $('.heroName.' + heroClass).text(data.name)
+  //     $('.heroAlter.' + heroClass).text(data.biography['fullName'])
+  //     $('.heroHeight.' + heroClass).text(data.appearance.height[0])
+  //     $('.heroWeight.' + heroClass).text(data.appearance.weight[0])
+  //     $('.heroRace.' + heroClass).text(data.appearance.race)
+  //     $('.heroIntelligence.' + heroClass).text(data.powerstats.intelligence)
+  //     $('.heroSpeed.' + heroClass).text(data.powerstats.speed)
+  //     $('.heroStrength.' + heroClass).text(data.powerstats.strength)
+  //     $('.heroDurability.' + heroClass).text(data.powerstats.durability)
+  //     $('.heroPower.' + heroClass).text(data.powerstats.power)
+  //     $('.heroGroup.' + heroClass).text(data.connections.groupAffiliation)
+  //     $('.heroApp.' + heroClass).text(data.biography['firstAppearance'])
+  //     $(".heroImg." + heroClass).attr("data-heroId", heroId)
+  //     $(".heroImg." + heroClass).attr("src", data.image.url)
+  //     $(".heroWrapper." + heroClass).attr("data-name", data.name)
+  //     $(".heroWrapper." + heroClass).attr("data-heroId", heroId);
+  // });
+
+  $.ajax({
+    method: 'get',
+    url: url + '/percent',
+    contentType: "application/json",
+    data: {
+      heroId: heroId,
+    }
+  }).done(function(data){
+    console.log(data);
     var dataLog = data[0].winPercentage;
     if (dataLog === null) {
       dataLog = 0
