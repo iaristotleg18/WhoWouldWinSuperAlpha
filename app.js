@@ -8,22 +8,16 @@ var handleVisitor = function(req, res) {
 // server.listen(8080);
 // console.log("See you in the future");
 
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host: '67.205.151.220',
-  user: 'WinData',
-  password: 'K!FVzh2@qso8ZALEDkzI67RFb$Woyo',
-  database: 'Superheroes'
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
 });
-connection.connect((err) => {
-  if (err) throw err;
-  console.log("Entered the Database. Incoming transmission");
-})
 
-connection.query('SELECT * FROM Hero_Name', (err,rows) => {
-  if (err) throw err;
+client.connect();
 
-  console.log(rows);
+client.query('SELECT * FROM heroes', (err,rows) => {
+  // console.log(rows);
 })
 
 const express = require('express')
@@ -38,51 +32,43 @@ app.use(bodyParser.json());
 
 app.get('/', handleVisitor)
 
-app.post("/selectHero", function (req, res){
+app.post("/api/selectHero", function (req, res){
   console.log(req.body.winnerId)
   console.log(req.body.loserId);
-  if (req.body.winnerId && req.body.loserId) {
-
-    // insert these ids into the db
-    const battle = {
-      winner_id: req.body.winnerId,
-      loser_id: req.body.loserId
-    };
-    // INSERT INTO heroes_battle SET winner_id = 5, loser_id = 10
-    connection.query('INSERT INTO heroes_battle SET ?', battle, (err, res) => {
-      if(err) throw err;
-      console.log('Data loaded and processed.')
-    })
-  }
-
-  res.send ("Done and done and done")
+  // INSERT INTO heroes_battle SET winner_id = 5, loser_id = 10
+  client.query('INSERT INTO heroes_battle(winner_id, loser_id) VALUES($1, $2)', [req.body.winnerId, req.body.loserId], (err, result) => {
+    if(err) throw err;
+    console.log('Data loaded and processed.')
+    res.send('OK');
+  })
 })
 
-app.get("/best", function (req, res){
-  connection.query("select name from heroes where id = (select winner_id FROM heroes_battle GROUP BY winner_id ORDER BY COUNT(*) DESC limit 1);", function (err, result, fields){
-    res.send(result);
-    console.log(result);
+app.get("/api/best", function (req, res){
+  client.query("select name from heroes where id = (select winner_id FROM heroes_battle GROUP BY winner_id ORDER BY COUNT(*) DESC limit 1);", function (err, result){
+    res.send(result.rows);
+    console.log(result.rows);
   });
 });
 
-app.get("/worst", function (req, res){
-  connection.query("select name from heroes where id = (select loser_id from heroes_battle group by loser_id order by count(*) DESC limit 1)", function (err, result, fields){
-    res.send(result);
-    console.log(result);
+app.get("/api/worst", function (req, res){
+  client.query("select name from heroes where id = (select loser_id from heroes_battle group by loser_id order by count(*) DESC limit 1)", function (err, result){
+    res.send(result.rows);
+    console.log(result.rows);
   });
 });
 
-app.get("/percent", function (req, res){
-  connection.query("SELECT SUM(winner_id = ?)/COUNT(*) as winPercentage FROM heroes_battle WHERE winner_id = ? or loser_id = ?", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result, fields){
-    console.log(this.sql);
-    res.send(result);
-    console.log(result);
+app.get("/api/percent", function (req, res){
+  client.query("SELECT SUM(winner_id = $1)/COUNT(*) as winPercentage FROM heroes_battle WHERE winner_id = $2 or loser_id = $3", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result){
+    // console.log(this.sql);
+    // console.log(result);
+    // res.send(result.rows);
+    // console.log(result.rows);
   });
 });
 app.get("/api/heroes/:id", function (req, res){
-  connection.query("SELECT * FROM heroes WHERE id = ?", [req.params.id], function (err, result, fields){
-    res.send(result)
+  client.query("SELECT * FROM heroes WHERE id = $1", [req.params.id], function (err, result){
+    res.send(result.rows)
   });
 });
 
-app.listen(port, () => console.log(`See you in the future`))
+app.listen(port, () => console.log(`${port}: See you in the future`))

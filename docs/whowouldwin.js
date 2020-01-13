@@ -1,11 +1,11 @@
-var url = "http://who-would-win-super-alpha.herokuapp.com";
-var loc = "http://localhost:8080";
+// var url = "http://who-would-win-super-alpha.herokuapp.com";
+var url = "http://localhost:8080";
 $(document).ready(function() {
   // Get hero leaderboard
   // current winner
   $.ajax({
     method: 'get',
-    url: url + '/best',
+    url: url + '/api/best',
     contentType: "application/json"
   }).done(function(data){
     $('.Champion').text(data[0].name)
@@ -14,7 +14,7 @@ $(document).ready(function() {
   // current loser
   $.ajax({
     method: 'get',
-    url: url + '/worst',
+    url: url + '/api/worst',
     contentType: "application/json"
   }).done(function(data){
     $('.Unlucky').text(data[0].name)
@@ -44,7 +44,7 @@ $(document).ready(function() {
         // ajax post request
         $.ajax({
           method: 'post',
-          url: url + '/selectHero',
+          url: url + '/api/selectHero',
           contentType: "application/json",
           data: JSON.stringify({
             winnerId: victorId,
@@ -82,11 +82,11 @@ var selectHeroes = function() {
   var hero1;
   var hero2;
 
-  hero1 = Math.floor(Math.random() * 32) + 1;
-  hero2 = Math.floor(Math.random() * 32) + 1;
+  hero1 = Math.floor(Math.random() * 33) + 1;
+  hero2 = Math.floor(Math.random() * 33) + 1;
 
   while(hero1 == hero2) {
-    hero2 = Math.floor(Math.random() * 32) + 1;
+    hero2 = Math.floor(Math.random() * 33) + 1;
   }
 
   return {
@@ -103,7 +103,7 @@ function loadHeroWimpApi(heroId, heroClass) {
     const [data] = allData;
     console.log(data);
       $('.heroName.' + heroClass).text(data.name)
-      $('.heroAlter.' + heroClass).text(data['alter-ego'])
+      $('.heroAlter.' + heroClass).text(data['alter_ego'])
       // $('.heroHeight.' + heroClass).text(data.height)
       // $('.heroWeight.' + heroClass).text(data.weight)
       $('.heroRace.' + heroClass).text(data.species)
@@ -112,16 +112,16 @@ function loadHeroWimpApi(heroId, heroClass) {
       $('.heroStrength.' + heroClass).text(data.strength)
       $('.heroGroup.' + heroClass).text(data.superteam)
       $('.heroItem.' + heroClass).text(data.tool)
-      $('.heroPower.' + heroClass).text(data['main-power'])
+      $('.heroPower.' + heroClass).text(data['main_power'])
       $(".heroImg." + heroClass).attr("data-heroId", heroId)
-      $(".heroImg." + heroClass).attr("src", data['to-img'])
+      $(".heroImg." + heroClass).attr("src", data['to_img'])
       $(".heroWrapper." + heroClass).attr("data-name", data.name)
       $(".heroWrapper." + heroClass).attr("data-heroId", heroId);
   })
 
   $.ajax({
     method: 'get',
-    url: url + '/percent',
+    url: url + '/api/percent',
     contentType: "application/json",
     data: {
       heroId: heroId,
@@ -168,7 +168,7 @@ function loadHero(heroId, heroClass) {
 
   $.ajax({
     method: 'get',
-    url: url + '/percent',
+    url: url + '/api/percent',
     contentType: "application/json",
     data: {
       heroId: heroId,
