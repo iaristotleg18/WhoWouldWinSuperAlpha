@@ -1,5 +1,5 @@
-// var url = "http://who-would-win-super-alpha.herokuapp.com";
-var url = "http://localhost:8080";
+var url = "http://who-would-win-super-alpha.herokuapp.com";
+// var url = "http://localhost:8080";
 $(document).ready(function() {
   // Get hero leaderboard
   // current winner
