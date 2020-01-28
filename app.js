@@ -58,10 +58,14 @@ app.get("/api/worst", function (req, res){
 });
 
 app.get("/api/percent", function (req, res){
-  client.query("SELECT SUM(winner_id = $1)/COUNT(*) as winPercentage FROM heroes_battle WHERE winner_id = $2 or loser_id = $3", [req.query.heroId,req.query.heroId,req.query.heroId], function (err, result){
-    // console.log(this.sql);
-    // console.log(result);
+  client.query("SELECT 100 * SUM(CASE WHEN winner_id = $1 THEN 1 ELSE 0 END) / SUM(CASE WHEN winner_id = $1 or loser_id = $1 THEN 1 ELSE 0 END) as percentageWon from heroes_battle;", [req.query.heroId], function (err, result){
+    var winPercentag = 0;
+    if (result) {
+      winPercentag = result.rows[0]['percentagewon'];
+    }
+    res.send(200, { winPercentage: winPercentag });
     // res.send(result.rows);
+
     // console.log(result.rows);
   });
 });

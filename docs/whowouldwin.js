@@ -128,11 +128,11 @@ function loadHeroWimpApi(heroId, heroClass) {
     }
   }).done(function(data){
     console.log(data);
-    var dataLog = data[0].winPercentage;
+    var dataLog = data.winPercentage;
     if (dataLog === null) {
       dataLog = 0
     }
-    var dataPercent = dataLog * 100 + "%";
+    var dataPercent = dataLog + "%";
     $("." + heroClass + ' .winPercentage').text(dataPercent)
   });
 };
@@ -175,11 +175,11 @@ function loadHero(heroId, heroClass) {
     }
   }).done(function(data){
     console.log(data);
-    var dataLog = data[0].winPercentage;
+    var dataLog = data.winPercentage;
     if (dataLog === null) {
       dataLog = 0
     }
-    var dataPercent = dataLog * 100 + "%";
+    var dataPercent = dataLog + "%";
     $("." + heroClass + ' .winPercentage').text(dataPercent)
   });
 };
